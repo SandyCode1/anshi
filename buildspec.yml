@@ -12,8 +12,8 @@ phases:
 
   build:
     commands:
-      - echo "Deploying updated files to S3..."
-      - aws s3 cp . s3://$S3_BUCKET/ --recursive
+      - echo "Deploying static website files to S3..."
+      - aws s3 cp . s3://$S3_BUCKET/ --recursive --exclude ".git/*" --exclude "buildspec.yml" --exclude ".gitignore"
       - echo "Invalidating CloudFront cache..."
       - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID --paths "/*"
 
